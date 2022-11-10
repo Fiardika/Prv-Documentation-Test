@@ -46,9 +46,8 @@ deploy-app-test:
     - chmod 400 $PEM
   script:
     - ssh -o StrictHostKeyChecking=no -i $PEM ubuntu@$EC2_IP "
-        aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile fiardika && 
-        aws configure set aws_secret_access_key "$AWS_ACCESS_KEY_SECRET" --profile fiardika && 
-        aws configure set region "$AWS_REGION" --profile fiardika && 
-        aws configure set output "text" --profile fiardika &&
-        aws eks update-kubeconfig --region "$AWS_REGION" --name belajar-cluster
+        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile fiardika && 
+        aws configure set aws_secret_access_key $AWS_ACCESS_KEY_SECRET --profile fiardika && 
+        aws configure set region $AWS_REGION --profile fiardika &&
+        aws eks update-kubeconfig --region $AWS_REGION --name belajar-cluster &&
         kubectl apply -f /home/ubuntu/app-test.yml
