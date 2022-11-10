@@ -34,6 +34,11 @@
   }
 
     provisioner "file" {
+    source      = "app-test.yml"
+    destination = "/home/ubuntu/app-test.yml"
+  }
+
+    provisioner "file" {
     source      = "installation.sh"
     destination = "/tmp/installation.sh"
   }
