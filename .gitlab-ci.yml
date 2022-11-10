@@ -47,4 +47,4 @@ deploy-app-test:
     - chmod 400 $PEM
   script:
     - ssh -o StrictHostKeyChecking=no -i $PEM ubuntu@$EC2_IP "
-        kubectl apply -f /home/ubuntu/app-test.yml
+        kubectl apply -f /home/ubuntu/app-test.yml "
