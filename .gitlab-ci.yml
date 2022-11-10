@@ -38,16 +38,21 @@ deploy-app:
     - ssh -o StrictHostKeyChecking=no -i $PEM ubuntu@$EC2_IP "
         docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD &&
         docker ps -aq | xargs docker stop | xargs docker rm &&
-        docker run -d -p 3000:3000 fiardika/privy:$CI_COMMIT_SHORT_SHA"
-
-deploy-app-test:
-  stage: deploy
-  before_script:
-    - chmod 400 $PEM
-  script:
-    - ssh -o StrictHostKeyChecking=no -i $PEM ubuntu@$EC2_IP "
+        docker run -d -p 3000:3000 fiardika/privy:$CI_COMMIT_SHORT_SHA" &&
         aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile fiardika && 
         aws configure set aws_secret_access_key $AWS_ACCESS_KEY_SECRET --profile fiardika && 
         aws configure set region $AWS_REGION --profile fiardika &&
         aws eks update-kubeconfig --region $AWS_REGION --name belajar-cluster &&
         kubectl apply -f /home/ubuntu/app-test.yml
+
+#deploy-app-test:
+#  stage: deploy
+#  before_script:
+#    - chmod 400 $PEM
+#  script:
+#    - ssh -o StrictHostKeyChecking=no -i $PEM ubuntu@$EC2_IP "
+#        aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID --profile fiardika && 
+#        aws configure set aws_secret_access_key $AWS_ACCESS_KEY_SECRET --profile fiardika && 
+#        aws configure set region $AWS_REGION --profile fiardika &&
+#        aws eks update-kubeconfig --region $AWS_REGION --name belajar-cluster &&
+#        kubectl apply -f /home/ubuntu/app-test.yml
