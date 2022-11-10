@@ -20,6 +20,7 @@ deploy-job:      # This job runs in the deploy stage.
   image: alpine
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   before_script:
+    - apt-get install openssh-server
     - echo "$PEM" > dell.pem
   script:
   - ssh -i dell.pem ubuntu@"EC2_IP"
