@@ -14,7 +14,7 @@ build-job:       # This job runs in the build stage, which runs first.
   script:
     - echo "=====Build and Push Docker Image====="
     - cd app
-    - docker build -t fiardika/privy:latest
+    - docker build . -t fiardika/privy:latest
     - docker push fiardika/privy:latest
     - echo "=====Build and Push Complete====="
 
