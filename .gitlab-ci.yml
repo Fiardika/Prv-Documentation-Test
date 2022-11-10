@@ -23,7 +23,7 @@ build-test-app:
   services:
   - docker:dind
   before_script:
-  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD"
   script:
     - echo "=====Build and Push Docker Image====="
     - cd app-test
@@ -47,4 +47,4 @@ deploy-app-test:
     - chmod 400 $PEM
   script:
     - ssh -o StrictHostKeyChecking=no -i $PEM ubuntu@$EC2_IP "
-        kubectl apply -f /home/ubuntu/app-test.yml "
+        kubectl apply -f /home/ubuntu/app-test.yml"
