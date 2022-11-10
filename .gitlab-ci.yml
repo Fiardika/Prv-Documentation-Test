@@ -20,13 +20,5 @@ build-job:       # This job runs in the build stage, which runs first.
 
 deploy-job:      # This job runs in the deploy stage.
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
-  before_script:
-  - 'command -v ssh-agent >/dev/null || ( apk add --update openssh )' 
-  - eval $(ssh-agent -s)
-  - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-  - mkdir -p ~/.ssh
-  - chmod 700 ~/.ssh
-  - ssh-keyscan $EC2_IP >> ~/.ssh/known_hosts
-  - chmod 644 ~/.ssh/known_hosts
   script:
-  - ssh -o StrictHostKeyChecking=no ubuntu@$EC2_IP "docker run -it 3000:3000 fiardika/privy:latest"
+  - docker run -it 3000:3000 fiardika/privy:latest
