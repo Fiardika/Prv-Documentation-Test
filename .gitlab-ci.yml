@@ -17,9 +17,9 @@ build-job:       # This job runs in the build stage, which runs first.
     - echo "=====Build and Push Complete====="
 
 deploy-job:      # This job runs in the deploy stage.
-  image: ubuntu:20.04
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.
   before_script:
+    - apt-get install openssh-server
     - echo "$PEM" > dell.pem
   script:
   - ssh -i dell.pem ubuntu@"EC2_IP"
