@@ -28,7 +28,7 @@ build-test-app:
     - echo "=====Build and Push Docker Image====="
     - cd app-test
     - docker build . -t fiardika/app-test:latest
-    - docker push fiardika/test-app:latest
+    - docker push fiardika/app-test:latest
     - echo "=====Build and Push Complete====="
 
 deploy-app:
