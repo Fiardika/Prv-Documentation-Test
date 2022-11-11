@@ -6,4 +6,5 @@ spec:
   containers:
   - name: app-curl
     image: fiardika/app-test:latest
+    imagePullPolicy: Always
   restartPolicy: Never
