@@ -29,12 +29,12 @@ variable "KEY" {
   default   =  "dell"
 }
 
-#Change the value with you key
+#Change the value with the Subnet ID from the VPC creation
 variable "SUBNET_ID" {
-  default   =  "subnet-04b4a047344fb24aa"
+  default   =  "subnet-xxxxxxxxxxxx"
 }
 
-#Change the value with you key
+#Change the value with the Secutiry Group ID from the VPC creation
 variable "SECURITY_GROUP" {
-  default   =  ["sg-0c148bff3fdab6d3f"]
+  default   =  ["sg-xxxxxxxxxx"]
 }
