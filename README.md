@@ -81,8 +81,33 @@ Following variables are needed
 ## Phase 3 - Deployment
 When there is a change on the repository, Gitlab CI will automatically run the script.
 - Build app as Docker Image and push it to repository
+
+![My Image](screenshot/build_app_1.png)
+![My Image](screenshot/build_app_2.png)
+
 - Build app-test as Docker Image and push it to repository
+
+![My Image](screenshot/build_test_1.png)
+![My Image](screenshot/build_test_1.png)
+
 - Deploy the app to the Bastion VM
+
+![My Image](screenshot/deploy_vm.png)
+
 - Deploy the app-test to the Cluster
 
+![My Image](screenshot/deploy_test.png)
+
 ## Phase 4 - Result
+- Pods has been created successfully
+- By checking the pod logs, we know that the output when Pods access the app it's using the true NAT IP
+
+![My Image](screenshot/result.png)
+
+## Closing
+Here's my blocker for this project
+- I can't create the unit testing because i don't get the logic how to test this app by unit testing
+- In VM Bastion (main application) i open several port besides the NginX port (80). 
+- I open port 22 for the Gitlab runner to able to SSH to the Bastion Instance and deploy docker. 
+- I open port 80 and whitelisted the NAT IP in Security Group automatically by the Terraform script. This have to be done because if I only open the port 80 for Kubernetes Network, the pods unable to curl or access the application, because when pods access to outside (public aplication) it's using the NAT IP.
+- I also already tested when the pods access to the application by private to private. The output is not NAT IP but the private IP.
