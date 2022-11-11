@@ -111,14 +111,13 @@ resource "aws_security_group" "eks_sg" {
   vpc_id      = aws_vpc.vpc.id
   depends_on  = [aws_vpc.vpc]
 
-  /* Allow only ssh traffic from internet */
-/*  ingress {
+  ingress {
     from_port = "22"
     to_port   = "22"
     protocol  = "TCP"
     self      = true
-    cidr_blocks      = ["0.0.0.0/0"]
-  } */
+    cidr_blocks      = [var.VPC_CIDR]
+  } 
 
   ingress {
     from_port = "80"
@@ -160,7 +159,6 @@ resource "aws_security_group" "eks_sg" {
     to_port          = "0"
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
   }
 }
 
@@ -233,7 +231,6 @@ resource "aws_security_group" "instance_sg" {
     protocol  = "TCP"
     self      = true
     cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
   }
 
   ingress {
@@ -242,7 +239,6 @@ resource "aws_security_group" "instance_sg" {
     protocol  = "TCP"
     self      = true
     cidr_blocks      = [var.VPC_CIDR]
-    ipv6_cidr_blocks = ["::/0"]
   }
 
   /* Allow all outbound traffic to internet */
@@ -251,7 +247,6 @@ resource "aws_security_group" "instance_sg" {
     to_port          = "0"
     protocol         = "-1"
     cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
   }
 }
 

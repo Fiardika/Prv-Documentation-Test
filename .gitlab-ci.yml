@@ -1,7 +1,7 @@
 stages:
   - build
   - deploy
-  - kube
+  - deploy_kube
 
 build-app:
   stage: build
@@ -42,7 +42,7 @@ deploy-app:
         docker run -d -p 3000:3000 fiardika/privy:$CI_COMMIT_SHORT_SHA"
 
 deploy-app-test:
-  stage: kube
+  stage: deploy_kube
   before_script:
     - chmod 400 $PEM
   script:

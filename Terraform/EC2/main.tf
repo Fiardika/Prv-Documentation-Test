@@ -29,7 +29,7 @@
   }
 
     provisioner "file" {
-    source      = "default"
+    source      = "default.conf"
     destination = "/tmp/default"
   }
 

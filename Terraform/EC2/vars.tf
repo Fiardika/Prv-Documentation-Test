@@ -2,10 +2,12 @@ variable "AWS_REGION" {
     default = "ap-southeast-1"
 }
 
+#Change the value with your key
 variable "AWS_ACCESS_KEY" {
     default = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 }
 
+#Change the value with your key
 variable "AWS_SECRET_KEY" {
     default = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" 
 }
@@ -18,6 +20,7 @@ variable "PROJECT" {
     default = "Privy"
 }
 
+#This AMI is AWS template for Ubuntu
 variable "AMI" {
   default   =  "ami-00e912d13fbb4f225"
 }
@@ -26,14 +29,12 @@ variable "KEY" {
   default   =  "dell"
 }
 
-variable "SUBNET_ID1" {
+#Change the value with you key
+variable "SUBNET_ID" {
   default   =  "subnet-04b4a047344fb24aa"
 }
 
-variable "SUBNET_ID2" {
-  default   =  "subnet-045e2ea26f640f805"
-}
-
+#Change the value with you key
 variable "SECURITY_GROUP" {
   default   =  ["sg-0c148bff3fdab6d3f"]
 }
