@@ -12,3 +12,14 @@ sudo usermod -aG docker $USER
 sudo apt-get update
 sudo apt-get install nginx -y
 sudo cp -rf /tmp/default /etc/nginx/sites-available/default
+
+#Install AWS CLI
+sudo apt-get install unzip -y
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+#Install Kubectl
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl

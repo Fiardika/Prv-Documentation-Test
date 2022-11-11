@@ -115,7 +115,6 @@ resource "aws_security_group" "eks_sg" {
     from_port = "22"
     to_port   = "22"
     protocol  = "TCP"
-    self      = true
     cidr_blocks      = [var.VPC_CIDR]
   } 
 
@@ -123,17 +122,8 @@ resource "aws_security_group" "eks_sg" {
     from_port = "80"
     to_port   = "80"
     protocol  = "TCP"
-    self      = true
     cidr_blocks      = [var.VPC_CIDR]
   }
-
-/*  ingress {
-    from_port = "80"
-    to_port   = "80"
-    protocol  = "TCP"
-    self      = true
-    cidr_blocks      = [var.VPC_CIDR_INSTANCE]
-  } */
 
   /* 443 Used for Private Access to Kubernetes Controller */
 
@@ -141,15 +131,6 @@ resource "aws_security_group" "eks_sg" {
     from_port = "443"
     to_port   = "443"
     protocol  = "TCP"
-    self      = true
-    cidr_blocks      = [var.VPC_CIDR]
-  }
-
-  ingress {
-    from_port = "443"
-    to_port   = "443"
-    protocol  = "TCP"
-    self      = true
     cidr_blocks      = [var.VPC_CIDR_INSTANCE]
   }
 
@@ -229,7 +210,6 @@ resource "aws_security_group" "instance_sg" {
     from_port = "22"
     to_port   = "22"
     protocol  = "TCP"
-    self      = true
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
@@ -237,8 +217,14 @@ resource "aws_security_group" "instance_sg" {
     from_port = "80"
     to_port   = "80"
     protocol  = "TCP"
-    self      = true
     cidr_blocks      = [var.VPC_CIDR]
+  }
+
+  ingress {
+    from_port = "80"
+    to_port   = "80"
+    protocol  = "TCP"
+    cidr_blocks      = ["${aws_eip.nat_eip.public_ip}/32"] 
   }
 
   /* Allow all outbound traffic to internet */

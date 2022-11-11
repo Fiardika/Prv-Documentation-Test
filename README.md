@@ -3,7 +3,7 @@ This project divided by 4 phase
 
 Note:
 - Every service (VPC, EKS, and EC2) has it's own Terraform script. I make this separated to make it easier to understand.
-- Use your own AWS KEY in the vars. Change the 'xxxxxxxxxxxxxx' to your own data.
+- Use your own AWS KEY in the vars.tf Change the 'xxxxxxxxxxxxxx' to your own data.
 - vars.tf must be considered because the data it is not dynamic. For example, security group and subnet need to be change after VPC creation.
 - I've created key.pem before, called dell.pem (not shared). Change this to your own key.pem
 - app folder is for the main application
@@ -12,7 +12,7 @@ Note:
 
 ## Phase 1 - Infrastructure Creation
 Phase 1 will provide infrastructure creation using Terraform.
-There are 3 Terraform script
+There are 3 Terraform scripts
 - VPC
 - EKS
 - EC2
@@ -41,27 +41,12 @@ Note: Please run the VPC script first to get the subnet for the EKS and EC2, aft
 After finishing the Phase 1, you'll have
 - 2 VPC + NAT
 - 1 EKS Cluster with 2 VM
-- 1 Bastion VM to access private EKS cluster
-![My Image](screenshot/nat_ip.png)
+- 1 Bastion VM to access private EKS cluster. This VM it's already installed with NginX, Docker, Kubectl, and AWS CLI. Installed by Terraform provisioner script.
 ![My Image](screenshot/vpc_list.png)
+![My Image](screenshot/nat_ip.png)
 ![My Image](screenshot/eks_list.png)
 ![My Image](screenshot/ec2_list.png)
-
-SSH to the Bastion and install AWS CLI and Kubectl:
-- AWS CLI
-```
-sudo apt-get install unzip
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-```
-
-- Kubectl
-```
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-```
+![My Image](screenshot/docker_nginx.png)
 
 SSH to the Bastion and add AWS configuration and get EKS kubeconfig:
 - aws configure
@@ -74,7 +59,14 @@ aws configure set aws_access_key_id "xxxxxxxx" && aws configure set aws_secret_a
 aws eks update-kubeconfig --region ap-southeast-1 --name belajar-cluster
 ```
 
-Copy every variable to the Gitlab Variable. Following variables are needed
+![My Image](screenshot/config_aws.png)
+
+Copy every variable to the Gitlab Variable. 
+Go to Settings -> CI/CD -> Variables
+
+![My Image](screenshot/add_var_1.png)
+
+Following variables are needed
 - AWS_ACCESS_KEY_ID
 - AWS_ACCESS_KEY_SECRET
 - AWS_REGION
@@ -83,6 +75,8 @@ Copy every variable to the Gitlab Variable. Following variables are needed
 - EC2_IP (Bastion IP)
 - PEM.KEY (as File)
 - SSH_USER (Bastion user)
+
+![My Image](screenshot/add_var_2.png)
 
 ## Phase 3 - Deployment
 When there is a change on the repository, Gitlab CI will automatically run the script.
