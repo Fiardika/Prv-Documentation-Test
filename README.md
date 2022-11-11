@@ -42,11 +42,13 @@ After finishing the Phase 1, you'll have
 - 2 VPC + NAT
 - 1 EKS Cluster with 2 VM
 - 1 Bastion VM to access private EKS cluster. This VM it's already installed with NginX, Docker, Kubectl, and AWS CLI. Installed by Terraform provisioner script.
+- AMI that created from the Bastion VM
 ![My Image](screenshot/vpc_list.png)
 ![My Image](screenshot/nat_ip.png)
 ![My Image](screenshot/eks_list.png)
 ![My Image](screenshot/ec2_list.png)
 ![My Image](screenshot/docker_nginx.png)
+![My Image](screenshot/ami.png)
 
 SSH to the Bastion and add AWS configuration and get EKS kubeconfig:
 - aws configure
@@ -111,3 +113,5 @@ Here's my blocker for this project
 - I open port 22 for the Gitlab runner to able to SSH to the Bastion Instance and deploy docker. 
 - I open port 80 and whitelisted the NAT IP in Security Group automatically by the Terraform script. This have to be done because if I only open the port 80 for Kubernetes Network, the pods unable to curl or access the application, because when pods access to outside (public aplication) it's using the NAT IP.
 - I also already tested when the pods access to the application by private to private. The output is not NAT IP but the private IP.
+
+Thank you so much for the time to reviewing my work!
