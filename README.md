@@ -25,7 +25,7 @@ There are 3 Terraform script
 - wait until the creation completed
 
 Note: Please run the VPC script first to get the subnet for the EKS and EC2, after getting the output, copy it to the EKS and EC2 vars.tf
-Image
+![image.png](./image.png)
 - eks_sg_id is security group for EKS
 - instance_sh id is security group for EC2
 
